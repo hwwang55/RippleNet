@@ -1,1 +1,1 @@
-# ripple networks
+# ripple network
