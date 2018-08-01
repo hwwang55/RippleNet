@@ -4,6 +4,7 @@ This repository is the implementation of RippleNet ([arXiv](https://arxiv.org/ab
 > RippleNet: Propagating User Preferences on the Knowledge Graph for Recommender Systems  
 Hongwei Wang, Fuzheng Zhang, Jialin Wang, Miao Zhao, Wenjie Li, Xing Xie, Minyi Guo  
 
+![](https://github.com/hwwang55/RippleNet/blob/master/framework.jpg)
 
 RippleNet is a deep end-to-end model that naturally incorporates the knowledge graph into recommender systems.
 Ripple Network overcomes the limitations of existing embedding-based and path-based KG-aware recommendation methods by introducing preference propagation, which automatically propagates users' potential preferences and explores their hierarchical interests in the KG.
