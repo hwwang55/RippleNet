@@ -36,6 +36,6 @@ The code has been tested running under Python 3.6.5, with the following packages
 ### Running the code
 ```
 $ cd src
-$ python preprocess.py --dataset movie  # or --dataset book
-$ python main.py (note: use -h to check optional arguments)
+$ python preprocess.py --dataset movie (or --dataset book)
+$ python main.py --dataset movie (note: use -h to check optional arguments)
 ```
