@@ -3,6 +3,7 @@
 This repository is the implementation of RippleNet ([arXiv](https://arxiv.org/abs/1803.03467)):
 > RippleNet: Propagating User Preferences on the Knowledge Graph for Recommender Systems  
 Hongwei Wang, Fuzheng Zhang, Jialin Wang, Miao Zhao, Wenjie Li, Xing Xie, Minyi Guo  
+The 27th ACM International Conference on Information and Knowledge Management (CIKM 2018)
 
 ![](https://github.com/hwwang55/RippleNet/blob/master/framework.jpg)
 
