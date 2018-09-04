@@ -1,3 +1,4 @@
+import collections
 import os
 import numpy as np
 
@@ -83,13 +84,11 @@ def load_kg(args):
 
 def construct_kg(kg_np):
     print('constructing knowledge graph ...')
-    kg = dict()
+    kg = collections.defaultdict(list)
     for triple in kg_np:
         head = triple[0]
         relation = triple[1]
         tail = triple[2]
-        if head not in kg:
-            kg[head] = []
         kg[head].append((tail, relation))
     return kg
 
@@ -98,10 +97,9 @@ def get_ripple_set(args, kg, user_history_dict):
     print('constructing ripple set ...')
 
     # user -> [[hop_0_heads, hop_0_relations, hop_0_tails], [hop_1_heads, hop_1_relations, hop_1_tails], ...]
-    ripple_set = dict()
+    ripple_set = collections.defaultdict(list)
 
     for user in user_history_dict:
-        ripple_set[user] = []
         for h in range(args.n_hop):
             memories_h = []
             memories_r = []
@@ -113,11 +111,10 @@ def get_ripple_set(args, kg, user_history_dict):
                 tails_of_last_hop = ripple_set[user][-1][2]
 
             for entity in tails_of_last_hop:
-                if entity in kg:
-                    n_neighbor = len(kg[entity])
-                    memories_h.extend(n_neighbor * [entity])
-                    memories_r.extend(kg[entity][i][1] for i in range(n_neighbor))
-                    memories_t.extend(kg[entity][i][0] for i in range(n_neighbor))
+                n_neighbor = len(kg[entity])
+                memories_h.extend(n_neighbor * [entity])
+                memories_r.extend(kg[entity][i][1] for i in range(n_neighbor))
+                memories_t.extend(kg[entity][i][0] for i in range(n_neighbor))
 
             # if the current ripple set of the given user is empty, we simply copy the ripple set of the last hop here
             # this won't happen for h = 0, because only the items that appear in the KG have been selected
