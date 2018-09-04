@@ -7,7 +7,7 @@ THRESHOLD = dict({'movie': 4, 'book': 0, 'news': 0})
 
 
 def read_item_index_to_entity_id_file():
-    file = '../data/' + DATASET + '/item_index2entity_id.txt'
+    file = '../data/' + DATASET + '/item_index2entity_id_rehashed.txt'
     print('reading item index to entity id file: ' + file + ' ...')
     i = 0
     for line in open(file, encoding='utf-8').readlines():
@@ -81,10 +81,10 @@ def convert_kg():
 
     files = []
     if DATASET == 'movie':
-        files.append(open('../data/' + DATASET + '/kg_part1.txt', encoding='utf-8'))
-        files.append(open('../data/' + DATASET + '/kg_part2.txt', encoding='utf-8'))
+        files.append(open('../data/' + DATASET + '/kg_part1_rehashed.txt', encoding='utf-8'))
+        files.append(open('../data/' + DATASET + '/kg_part2_rehashed.txt', encoding='utf-8'))
     else:
-        files.append(open('../data/' + DATASET + '/kg.txt', encoding='utf-8'))
+        files.append(open('../data/' + DATASET + '/kg_rehashed.txt', encoding='utf-8'))
 
     for file in files:
         for line in file:
