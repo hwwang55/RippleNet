@@ -95,12 +95,12 @@ ENV/
 # self added
 .idea/*
 data/movie/*
-!data/movie/item_index2entity_id.txt
+!data/movie/item_index2entity_id_rehashed.txt
 !data/movie/ratings.dat
-!data/movie/kg_part1.txt
-!data/movie/kg_part2.txt
+!data/movie/kg_part1_rehashed.txt
+!data/movie/kg_part2_rehashed.txt
 data/book/*
-!data/book/item_index2entity_id.txt
+!data/book/item_index2entity_id_rehashed.txt
 !data/book/BX-Book-Ratings.csv
-!data/book/kg.txt
+!data/book/kg_rehashed.txt
 data/news/*
