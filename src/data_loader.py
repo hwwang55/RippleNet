@@ -93,7 +93,7 @@ def construct_kg(kg_np):
 def get_ripple_set(args, kg, user_history_dict):
     print('constructing ripple set ...')
 
-    # user -> [[hop_0_heads, hop_0_relations, hop_0_tails], [hop_1_heads, hop_1_relations, hop_1_tails], ...]
+    # user -> [(hop_0_heads, hop_0_relations, hop_0_tails), (hop_1_heads, hop_1_relations, hop_1_tails), ...]
     ripple_set = collections.defaultdict(list)
 
     for user in user_history_dict:
@@ -127,6 +127,6 @@ def get_ripple_set(args, kg, user_history_dict):
                 memories_h = [memories_h[i] for i in indices]
                 memories_r = [memories_r[i] for i in indices]
                 memories_t = [memories_t[i] for i in indices]
-                ripple_set[user].append([memories_h, memories_r, memories_t])
+                ripple_set[user].append((memories_h, memories_r, memories_t))
 
     return ripple_set
