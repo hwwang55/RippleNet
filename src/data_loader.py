@@ -112,9 +112,10 @@ def get_ripple_set(args, kg, user_history_dict):
 
             for entity in tails_of_last_hop:
                 n_neighbor = len(kg[entity])
-                memories_h.extend(n_neighbor * [entity])
-                memories_r.extend(kg[entity][i][1] for i in range(n_neighbor))
-                memories_t.extend(kg[entity][i][0] for i in range(n_neighbor))
+                for i in range(n_neighbor):
+                    memories_h.append(entity)
+                    memories_r.append(kg[entity][i][1])
+                    memories_t.append(kg[entity][i][0])
 
             # if the current ripple set of the given user is empty, we simply copy the ripple set of the last hop here
             # this won't happen for h = 0, because only the items that appear in the KG have been selected
