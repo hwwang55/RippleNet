@@ -34,7 +34,7 @@ def dataset_split(rating_np):
     test_ratio = 0.2
     n_ratings = rating_np.shape[0]
 
-    eval_indices = np.random.choice(list(range(n_ratings)), size=int(n_ratings * eval_ratio), replace=False)
+    eval_indices = np.random.choice(n_ratings, size=int(n_ratings * eval_ratio), replace=False)
     left = set(range(n_ratings)) - set(eval_indices)
     test_indices = np.random.choice(list(left), size=int(n_ratings * test_ratio), replace=False)
     train_indices = list(left - set(test_indices))
@@ -121,9 +121,9 @@ def get_ripple_set(args, kg, user_history_dict):
             else:
                 # sample a fixed-size 1-hop memory for each user
                 if len(memories_h) >= args.n_memory:
-                    indices = np.random.choice(list(range(len(memories_h))), size=args.n_memory, replace=False)
+                    indices = np.random.choice(len(memories_h), size=args.n_memory, replace=False)
                 else:
-                    indices = np.random.choice(list(range(len(memories_h))), size=args.n_memory, replace=True)
+                    indices = np.random.choice(len(memories_h), size=args.n_memory, replace=True)
                 memories_h = [memories_h[i] for i in indices]
                 memories_r = [memories_r[i] for i in indices]
                 memories_t = [memories_t[i] for i in indices]
