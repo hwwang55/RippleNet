@@ -119,9 +119,9 @@ if __name__ == '__main__':
     np.random.seed(555)
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-d', type=str, default='movie', help='which dataset to preprocess')
+    parser.add_argument('-d', '--dataset', type=str, default='movie', help='which dataset to preprocess')
     args = parser.parse_args()
-    DATASET = args.d
+    DATASET = args.dataset
 
     entity_id2index = dict()
     relation_id2index = dict()
