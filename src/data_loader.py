@@ -85,10 +85,7 @@ def load_kg(args):
 def construct_kg(kg_np):
     print('constructing knowledge graph ...')
     kg = collections.defaultdict(list)
-    for triple in kg_np:
-        head = triple[0]
-        relation = triple[1]
-        tail = triple[2]
+    for head, relation, tail in kg_np:
         kg[head].append((tail, relation))
     return kg
 
