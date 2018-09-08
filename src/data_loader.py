@@ -120,10 +120,8 @@ def get_ripple_set(args, kg, user_history_dict):
                 ripple_set[user].append(ripple_set[user][-1])
             else:
                 # sample a fixed-size 1-hop memory for each user
-                if len(memories_h) >= args.n_memory:
-                    indices = np.random.choice(len(memories_h), size=args.n_memory, replace=False)
-                else:
-                    indices = np.random.choice(len(memories_h), size=args.n_memory, replace=True)
+                replace = len(memories_h) < args.n_memory
+                indices = np.random.choice(len(memories_h), size=args.n_memory, replace=replace)
                 memories_h = [memories_h[i] for i in indices]
                 memories_r = [memories_r[i] for i in indices]
                 memories_t = [memories_t[i] for i in indices]
