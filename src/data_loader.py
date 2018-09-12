@@ -1,3 +1,4 @@
+import collections
 import os
 import numpy as np
 
@@ -33,7 +34,7 @@ def dataset_split(rating_np):
     test_ratio = 0.2
     n_ratings = rating_np.shape[0]
 
-    eval_indices = np.random.choice(list(range(n_ratings)), size=int(n_ratings * eval_ratio), replace=False)
+    eval_indices = np.random.choice(n_ratings, size=int(n_ratings * eval_ratio), replace=False)
     left = set(range(n_ratings)) - set(eval_indices)
     test_indices = np.random.choice(list(left), size=int(n_ratings * test_ratio), replace=False)
     train_indices = list(left - set(test_indices))
@@ -83,13 +84,8 @@ def load_kg(args):
 
 def construct_kg(kg_np):
     print('constructing knowledge graph ...')
-    kg = dict()
-    for triple in kg_np:
-        head = triple[0]
-        relation = triple[1]
-        tail = triple[2]
-        if head not in kg:
-            kg[head] = []
+    kg = collections.defaultdict(list)
+    for head, relation, tail in kg_np:
         kg[head].append((tail, relation))
     return kg
 
@@ -97,11 +93,10 @@ def construct_kg(kg_np):
 def get_ripple_set(args, kg, user_history_dict):
     print('constructing ripple set ...')
 
-    # user -> [[hop_0_heads, hop_0_relations, hop_0_tails], [hop_1_heads, hop_1_relations, hop_1_tails], ...]
-    ripple_set = dict()
+    # user -> [(hop_0_heads, hop_0_relations, hop_0_tails), (hop_1_heads, hop_1_relations, hop_1_tails), ...]
+    ripple_set = collections.defaultdict(list)
 
     for user in user_history_dict:
-        ripple_set[user] = []
         for h in range(args.n_hop):
             memories_h = []
             memories_r = []
@@ -113,11 +108,10 @@ def get_ripple_set(args, kg, user_history_dict):
                 tails_of_last_hop = ripple_set[user][-1][2]
 
             for entity in tails_of_last_hop:
-                if entity in kg:
-                    n_neighbor = len(kg[entity])
-                    memories_h.extend(n_neighbor * [entity])
-                    memories_r.extend(kg[entity][i][1] for i in range(n_neighbor))
-                    memories_t.extend(kg[entity][i][0] for i in range(n_neighbor))
+                for tail_and_relation in kg[entity]:
+                    memories_h.append(entity)
+                    memories_r.append(tail_and_relation[1])
+                    memories_t.append(tail_and_relation[0])
 
             # if the current ripple set of the given user is empty, we simply copy the ripple set of the last hop here
             # this won't happen for h = 0, because only the items that appear in the KG have been selected
@@ -126,13 +120,11 @@ def get_ripple_set(args, kg, user_history_dict):
                 ripple_set[user].append(ripple_set[user][-1])
             else:
                 # sample a fixed-size 1-hop memory for each user
-                if len(memories_h) >= args.n_memory:
-                    indices = np.random.choice(list(range(len(memories_h))), size=args.n_memory, replace=False)
-                else:
-                    indices = np.random.choice(list(range(len(memories_h))), size=args.n_memory, replace=True)
+                replace = len(memories_h) < args.n_memory
+                indices = np.random.choice(len(memories_h), size=args.n_memory, replace=replace)
                 memories_h = [memories_h[i] for i in indices]
                 memories_r = [memories_r[i] for i in indices]
                 memories_t = [memories_t[i] for i in indices]
-                ripple_set[user].append([memories_h, memories_r, memories_t])
+                ripple_set[user].append((memories_h, memories_r, memories_t))
 
     return ripple_set
