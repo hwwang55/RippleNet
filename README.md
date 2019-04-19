@@ -10,7 +10,7 @@ The 27th ACM International Conference on Information and Knowledge Management (C
 RippleNet is a deep end-to-end model that naturally incorporates the knowledge graph into recommender systems.
 Ripple Network overcomes the limitations of existing embedding-based and path-based KG-aware recommendation methods by introducing preference propagation, which automatically propagates users' potential preferences and explores their hierarchical interests in the KG.
 
-A PyTorch re-implementation of RippleNet by Qibin CHen et al. is [here](https://github.com/qibinc/RippleNet-PyTorch).
+A PyTorch re-implementation of RippleNet by Qibin Chen et al. is [here](https://github.com/qibinc/RippleNet-PyTorch).
 
 
 ### Files in the folder
